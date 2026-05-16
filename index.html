@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Message For You ❤️</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Inter:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.14), transparent 35%),
+                linear-gradient(135deg, #1e1b4b 0%, #312e81 45%, #4f46e5 100%);
+            overflow: hidden;
+        }
+
+        .font-question {
+            font-family: 'Gochi Hand', cursive;
+        }
+
+        #no-button {
+            position: fixed;
+            top: 68%;
+            left: 55%;
+            transform: translate(-50%, -50%);
+            transition: all 0.18s ease-in-out;
+            z-index: 10;
+        }
+
+        #yes-button {
+            position: relative;
+            z-index: 20;
+        }
+    </style>
+</head>
+
+<body class="text-white min-h-screen flex items-center justify-center p-4">
+
+    <!-- Main Content -->
+    <div id="main-content"
+        class="bg-gray-900 bg-opacity-75 backdrop-blur-xl p-8 md:p-12 rounded-[2rem] shadow-2xl text-center max-w-xl w-full transition-all duration-500 ease-in-out transform scale-100 opacity-100">
+
+        <!-- Heart Image -->
+        <img
+            src="assets/love-heart.svg"
+            alt="Heart illustration"
+            class="w-48 h-48 mx-auto rounded-full mb-6 shadow-2xl border-4 border-pink-400 bg-white/10"
+        />
+
+        <h1 class="font-question text-4xl md:text-5xl font-bold text-pink-300 mb-4">
+            Hey... this is for you.
+        </h1>
+
+        <p class="text-xl md:text-2xl mb-6 font-question text-gray-200">
+            I couldn't keep it inside any longer.<br />
+            You make me smile every time we talk.
+        </p>
+
+        <p class="text-2xl md:text-3xl mb-11 font-semibold text-white">
+            Will you be my special someone? 🥺❤️
+        </p>
+
+        <!-- Buttons -->
+        <div class="relative flex flex-col sm:flex-row justify-center items-center gap-4 h-24">
+            <button id="yes-button"
+                class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-xl text-lg transition-all duration-300 transform hover:scale-105 shadow-xl">
+                YES, OF COURSE!
+            </button>
+
+            <button id="no-button"
+                class="bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 px-8 rounded-xl text-lg shadow-xl">
+                No.
+            </button>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="success-message"
+        class="hidden bg-gray-900 bg-opacity-75 backdrop-blur-xl p-8 md:p-12 rounded-[2rem] shadow-2xl text-center max-w-xl w-full transition-all duration-500 ease-in-out transform scale-0 opacity-0">
+
+        <img
+            src="assets/love-heart.svg"
+            alt="Celebration heart"
+            class="w-44 h-44 mx-auto rounded-full mb-6 shadow-2xl border-4 border-emerald-400 bg-white/10"
+        />
+
+        <h1 class="font-question text-5xl md:text-6xl font-bold text-emerald-300 mb-4">
+            YAAAAY, Hannah! 💚
+        </h1>
+
+        <p class="text-2xl md:text-3xl font-question text-gray-200 mb-6">
+            I knew you'd say yes.
+        </p>
+
+        <p class="text-lg text-gray-300">
+            Thank you for being amazing, Hannah. Let's make some lovely memories together.
+        </p>
+    </div>
+
+    <script>
+        const yesButton = document.getElementById('yes-button');
+        const noButton = document.getElementById('no-button');
+        const mainContent = document.getElementById('main-content');
+        const successMessage = document.getElementById('success-message');
+
+        const noButtonTexts = [
+            'No.',
+            'Are you sure? :(',
+            'Please?',
+            'C’mon!',
+            'You can’t say no!',
+            'Just press YES >.<',
+            'Don’t be like that',
+            'I’ll treat you to dinner',
+            'HMMMMM'
+        ];
+
+        let yesButtonScale = 1;
+        let noButtonTextIndex = 0;
+
+        yesButton.addEventListener('click', () => {
+            mainContent.classList.add('scale-0', 'opacity-0');
+
+            setTimeout(() => {
+                mainContent.classList.add('hidden');
+                successMessage.classList.remove('hidden', 'scale-0', 'opacity-0');
+                successMessage.classList.add('scale-100', 'opacity-100');
+            }, 500);
+        });
+
+        function moveButton() {
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const buttonWidth = noButton.offsetWidth;
+            const buttonHeight = noButton.offsetHeight;
+
+            let newX = Math.random() * (viewportWidth - buttonWidth - 90) + 45;
+            let newY = Math.random() * (viewportHeight - buttonHeight - 90) + 45;
+
+            newX = Math.max(35, Math.min(newX, viewportWidth - buttonWidth - 35));
+            newY = Math.max(35, Math.min(newY, viewportHeight - buttonHeight - 35));
+
+            noButton.style.left = `${newX}px`;
+            noButton.style.top = `${newY}px`;
+            noButton.style.transform = 'translate(0, 0)';
+
+            yesButtonScale = Math.min(2.2, yesButtonScale + 0.15);
+            yesButton.style.transform = `scale(${yesButtonScale})`;
+
+            noButtonTextIndex = (noButtonTextIndex + 1) % noButtonTexts.length;
+            noButton.innerText = noButtonTexts[noButtonTextIndex];
+        }
+
+        noButton.addEventListener('mouseover', moveButton);
+        noButton.addEventListener('click', moveButton);
+    </script>
+</body>
+</html>
